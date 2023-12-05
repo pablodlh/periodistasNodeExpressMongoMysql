@@ -4,9 +4,9 @@ import dotenv from 'dotenv'
 
 dotenv.config()
 
-const url = process.env.DB_CONN_STRING || 'mongodb://localhost:27017'
-const dbName = process.env.DB_NAME || 'noticiasDB'
-const collections: { [key: string]: Collection } = {}
+const url = process.env.DB_CONN_STRING ?? 'mongodb://localhost:27017'
+const dbName = process.env.DB_NAME ?? 'noticiasDB'
+const collections: Record<string, Collection> = {}
 
 async function createMongoConnection (): Promise<any> {
   try {
@@ -21,7 +21,7 @@ async function createMongoConnection (): Promise<any> {
 
 const addCollections = (db: Db): any => {
   collections.noticias = db.collection(
-    process.env.NOTICIAS_COLLECTION || 'noticias'
+    process.env.NOTICIAS_COLLECTION ?? 'noticias'
   )
 }
 
