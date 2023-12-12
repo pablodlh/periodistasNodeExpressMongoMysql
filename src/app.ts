@@ -1,14 +1,16 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
 import express from 'express'
-import createMongoConnection from '../context/MongoConnection'
-import createPgConnection from '../context/Postgress.Connection'
+import dotenv from 'dotenv'
+import { routerPeriodistas } from './periodistas/interface/rest/periodistas.router'
+
+dotenv.config()
+
 const app = express()
 const port = 3000
-
 app.use(express.json())
-createPgConnection('select *')
 
-createMongoConnection()
+// Routers
+app.use('/periodistas', routerPeriodistas)
 app.listen(port, () => {
   console.log(`Express is listening at http://localhost:${port}`)
 })
