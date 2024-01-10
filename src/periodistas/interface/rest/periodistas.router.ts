@@ -26,4 +26,17 @@ router.post('/create', async (req: Request, res: Response) => {
   }
 })
 
+router.delete('/delete/:id', async (req: Request, res: Response) => {
+  try {
+    const idPeriodista = Number(req.params.id)
+    const result: Message = await periodistaUseCases.deletePeriodista(idPeriodista)
+    res.json(result)
+  } catch (error) {
+    const message: Message = {
+      text: String(error)
+    }
+    res.status(500).send(message)
+  }
+}
+)
 export { router as routerPeriodistas }

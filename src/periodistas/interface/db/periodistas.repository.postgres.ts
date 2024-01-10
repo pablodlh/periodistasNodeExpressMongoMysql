@@ -28,4 +28,14 @@ export default class PeriodistasRepositoryPostgres implements PeriodistaReposito
     }
     return message
   }
+
+  async deletePeriodista (idPeriodista: number): Promise<Message>{
+    await executeQuery(
+      `delete from Periodistas where id = ${idPeriodista}` 
+    )
+      const message: Message= {
+        text: `el periodista con id ${idPeriodista} ha sido borrado correctamente`
+      }
+      return message;
+  }
 }

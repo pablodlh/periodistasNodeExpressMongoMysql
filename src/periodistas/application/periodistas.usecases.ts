@@ -12,13 +12,8 @@ export default class PeriodistaUseCases {
   async addPeriodista (periodista: Periodista): Promise<Message> {
     return await this.periodistaRepository.addPeriodista(periodista)
   }
-/*
-  async getPeriodistaById (id: number): Promise<Periodista | undefined> {
-    return await this.periodistaRepository.getPeriodistaById(id)
-  }
 
-  async getAllPeriodistas (): Promise<Periodista[] | undefined> {
-    return await this.periodistaRepository.getAllPeriodistas()
+  async deletePeriodista (idPeriodista: number): Promise<Message> {
+    return await this.periodistaRepository.deletePeriodista(idPeriodista)
   }
-  */
 }
