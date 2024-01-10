@@ -1,4 +1,4 @@
 export default interface Recurso {
-  id: string
+  id?: string
   url: string
 }
