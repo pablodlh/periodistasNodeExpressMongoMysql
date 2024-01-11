@@ -10,15 +10,15 @@ export default class NoticiaUseCases {
         this.noticiaRepository = noticiaRepository
     }
 
-    async getNoticias(): Promise<Noticia[]> {
+    async getNoticias(): Promise<Noticia[]| undefined> {
         return await this.noticiaRepository.getNoticias()
     }
 
-    async getNoticiaById(id: string): Promise<Noticia> {
+    async getNoticiaById(id: string): Promise<Noticia | undefined> {
         return await this.noticiaRepository.getNoticiaById(id)
     }
 
-    async getNoticiasByPeriodista(id: number): Promise<Noticia[]> {
+    async getNoticiasByPeriodista(id: number): Promise<Noticia[] | undefined> {
         return await this.noticiaRepository.getNoticiasByPeriodista(id)
     }
 
