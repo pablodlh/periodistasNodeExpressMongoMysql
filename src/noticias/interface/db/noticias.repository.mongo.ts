@@ -64,7 +64,7 @@ export default class NoticiaRepositoryMongo implements NoticiaRepository {
           periodistas: noticia.periodistas,
           recursos: noticia.recursos
         }
-            const result = await collections.proyectos.insertOne(noticiaToDB)
+            const result = await collections.noticias.insertOne(noticiaToDB)
             const id = String(result.insertedId)
         const message: Message = {
             text: `la noticia con id ${id} ha sido creada`
@@ -75,11 +75,15 @@ export default class NoticiaRepositoryMongo implements NoticiaRepository {
       async deleteNoticia(id: string): Promise<Message> {
         const objectId = new ObjectId(id)
         const result = await collections.noticias.deleteOne({ _id: objectId })
-        const idBorrado =  String(result.deletedCount)
+        const numeroBorrado =  String(result.deletedCount)
         const message: Message = {
-            text: `la noticia con id ${idBorrado} ha sido eliminada`
+            text: `se ha eliminado ${numeroBorrado} noticia`
         }
         return message
       }
 
 }
+
+const noticias = 
+
+export { noticias as noticias}
