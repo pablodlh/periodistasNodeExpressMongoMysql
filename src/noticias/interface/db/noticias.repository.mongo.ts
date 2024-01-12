@@ -4,6 +4,12 @@ import { collections } from '../../../../context/MongoConnection'
 import type Noticia from "../../domain/Noticia";
 import type NoticiaRepository from "../../domain/noticias.repository";
 import type Message from "../../../../context/responses/Message";
+import createMongoConnection from '../../../../context/MongoConnection'
+import PeriodistasRepositoryPostgres from "../../../periodistas/interface/db/periodistas.repository.postgres";
+import RecursosRepositoryPostgres from "../../../recursos/interface/db/recursos.respository.postgres";
+import Periodista from "../../../periodistas/domain/Periodista";
+import Recurso from "../../../recursos/domain/Recurso";
+
 
 export default class NoticiaRepositoryMongo implements NoticiaRepository {
     async getNoticias(): Promise<Noticia[] | undefined> {
@@ -82,8 +88,51 @@ export default class NoticiaRepositoryMongo implements NoticiaRepository {
         return message
       }
 
-}
 
-const noticias = 
 
-export { noticias as noticias}
+
+
+
+
+
+      async devolverConstanteNoticias() {
+        return createMongoConnection().then(async () => {
+          const noticiasRepo = new NoticiaRepositoryMongo();
+          const periodistaRepo = new PeriodistasRepositoryPostgres();
+          const recursoRepo = new RecursosRepositoryPostgres();
+      
+          const NoticiasIniciales: Noticia[] | undefined = await noticiasRepo.getNoticias();
+          const nuevasNoticias = [];
+      
+          if(NoticiasIniciales){
+            for (const noticia of NoticiasIniciales) {
+              const nuevaNoticia = { ...noticia }; 
+              const nombresPeriodistas = [];
+              const urlsRecursos = [];
+              for (const idPeriodista of nuevaNoticia.periodistas.map(Number)) {
+                const periodista = await periodistaRepo.getPeriodistaById(idPeriodista);
+                if (periodista) {
+                  nombresPeriodistas.push(periodista.nombre);
+                }
+              }
+              for (const idRecurso of nuevaNoticia.recursos.map(Number)) {
+                const recurso = await recursoRepo.getRecursoById(idRecurso);
+                if (recurso) {
+                  urlsRecursos.push(recurso.url);
+                }
+              }
+              nuevaNoticia.periodistas = nombresPeriodistas;
+              nuevaNoticia.recursos = urlsRecursos;
+              nuevasNoticias.push(nuevaNoticia); 
+            }
+          }
+      
+          return nuevasNoticias;
+        });
+      }
+
+    }
+
+
+const noticiasRepo = new NoticiaRepositoryMongo();
+export { noticiasRepo } 

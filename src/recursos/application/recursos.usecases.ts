@@ -15,4 +15,8 @@ export default class RecursoUseCases {
   async deleteRecurso (idRecurso: number): Promise<Message> {
     return await this.recursoRepository.deleteRecurso(idRecurso)
   }
+
+  async getRecursosById (idRecurso: number): Promise<Recruso | undefined> {
+    return await this.recursoRepository.getRecursoById(idRecurso)
+  }
 }

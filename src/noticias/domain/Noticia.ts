@@ -5,6 +5,6 @@ export default interface Noticia {
   id?: string
   titulo: string
   texto: string
-  periodistas: Periodista[]
-  recursos: Recurso[]
+  periodistas: Periodista[] | string[]
+  recursos: Recurso[] | string[]
 }

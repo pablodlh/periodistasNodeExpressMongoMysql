@@ -38,4 +38,41 @@ export default class PeriodistasRepositoryPostgres implements PeriodistaReposito
       }
       return message;
   }
+
+  async getPeriodistaById (idPeriodista: number): Promise<Periodista | undefined> {
+    const result = await executeQuery(
+      `select * from periodistas where id = ${idPeriodista}`
+    )
+    if (result.length === 0) return undefined
+    const periodista: Periodista = {
+      id: result[0].id,
+      nombre: result[0].nombre,
+      fechaNacimiento: result[0].fechaNacimiento
+    }
+    return periodista
+  }
+
+  async getPeriodistas(): Promise<Periodista[]> {
+    const result = await executeQuery(
+      'select * from periodistas'
+    )
+    const periodistas: Periodista[] = result.map((periodista: any) => {
+      return {
+        id: periodista.id,
+        nombre: periodista.nombre,
+        fechaNacimiento: periodista.fechaNacimiento
+      }
+    })
+    return periodistas
+  }
+
+  async editPeriodista (idPeriodista: number, fechaNacimiento: Date, nombrePeriodista: string): Promise<Message> {
+    await executeQuery(
+      `update periodistas set nombre = '${nombrePeriodista}', fechaNacimiento = '${fechaNacimiento}' where id = ${idPeriodista}`
+    )
+    const message: Message = {
+      text: `El periodista con id ${idPeriodista} ha sido actualizado`
+    }
+    return message
+  }
 }

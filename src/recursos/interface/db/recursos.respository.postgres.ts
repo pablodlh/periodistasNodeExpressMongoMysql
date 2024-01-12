@@ -32,5 +32,16 @@ export default class RecursosRepositoryPostgres implements RecursoRepository{
           }
           return message;
       }
+      async getRecursoById (id: number): Promise<Recruso | undefined> {
+        const result = await executeQuery(
+          `select * from recursos where id = '${id}'`
+        )
+        if (result.length === 0) return undefined
+        const recurso: Recruso = {
+          id: result[0].id,
+          url: result[0].url
+        }
+        return recurso
+      }
 
 }

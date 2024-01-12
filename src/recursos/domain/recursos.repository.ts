@@ -3,4 +3,5 @@ import type Message from '../../../context/responses/Message'
 export default interface RecursoRepository {
   addRecurso: (recurso: Recurso) => Promise<Message>
   deleteRecurso: (idRecurso: number) => Promise<Message>
+  getRecursoById: (idRecurso: number) => Promise<Recurso | undefined>
 }
